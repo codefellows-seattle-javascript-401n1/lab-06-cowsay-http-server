@@ -7,13 +7,18 @@ const bodyParser = require('./lib/parse-req');
 const cowsay = require('cowsay');
 
 const port = process.argv[2] || 3000;
-const badReq = 'bad request\ntry: localhost:3000/cowsay?text=howdy';
+const badReq = {text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'};
 
-function buildCowRes(data, status, res) {
+function buildCowRes(options, status, res) {
   res.writeHead(status, {
     'Content-Type': 'text/plain'
   });
-  res.write(cowsay.say({text: data.toString()}));
+  
+  const face = options.face || 'default';
+  res.write(cowsay.say({
+    text: options.text.toString(),
+    f: face
+  }));
   res.end();
 }
 
@@ -37,14 +42,14 @@ const server = http.createServer(function (req,res) {
   if (req.url.pathname === '/cowsay') {
     if (req.method === 'POST') {
       bodyParser.handlePost(req).then(function () {
-        buildCowRes(req.body.text, 200, res);
+        buildCowRes(req.body, 200, res);
       }).catch(function (err) {
         console.error('err', err);
         buildCowRes(badReq, 400, res);
       });
     } else if (req.method === 'GET'){
       bodyParser.handleGet(req).then(function() {
-        buildCowRes(req.body.text, 200, res);
+        buildCowRes(req.body, 200, res);
       }).catch(function(err){
         console.error('err', err);
         buildCowRes(badReq, 400, res);

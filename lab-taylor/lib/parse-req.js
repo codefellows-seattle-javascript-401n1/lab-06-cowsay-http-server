@@ -21,6 +21,8 @@ exports.handlePost = function (req) {
 exports.handleGet = function (req) {
   return new Promise(function (resolve, reject) {
     if (req.url.query.text){
+      console.log('req.url.query', req.url.query);
+      console.log('req.url', req.url);
       req.body = req.url.query;
       resolve();
     } else {
