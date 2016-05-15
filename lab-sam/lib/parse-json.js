@@ -9,7 +9,6 @@ module.exports = function(req){
 
       req.on('end', function(){
         try {
-          req.body = 'API Endpoints: /cowsay';
           reslove();
         } catch (err){
           reject(err);
