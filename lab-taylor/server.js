@@ -7,13 +7,13 @@ const bodyParser = require('./lib/parse-req');
 const cowsay = require('cowsay');
 
 const port = process.argv[2] || 3000;
-const badReq = {text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'};
+const badReq = {text: 'bad request\ntry: localhost:3000/cowsay?text=howdy&face=ghostbusters', face:'ghostbusters'};
 
 function buildCowRes(options, status, res) {
   res.writeHead(status, {
     'Content-Type': 'text/plain'
   });
-  
+
   const face = options.face || 'default';
   res.write(cowsay.say({
     text: options.text.toString(),
