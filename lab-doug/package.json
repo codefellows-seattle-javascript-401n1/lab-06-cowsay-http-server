@@ -19,6 +19,7 @@
   "homepage": "https://github.com/gsmatth/lab-06-cowsay-http-server#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "cowsay": "^1.1.6",
     "gulp": "^3.9.1",
     "mocha": "^2.4.5"
   }
