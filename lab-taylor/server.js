@@ -11,6 +11,15 @@ const server = http.createServer(function (req,res) {
   req.url = parseUrl(req.url);
   req.query = parseQuery(req.query);
 
+  console.log('req', req.url);
+
+  if (req.url.path === '/') {
+    res.writeHead(200);
+    res.write('API ENDPOINTS:\n/cowsay');
+    res.end();
+  }
+
+
   // 1. detect path
   // 2. if `/` then respond with endpoints
   // 3. if `/cowsay` then detect method

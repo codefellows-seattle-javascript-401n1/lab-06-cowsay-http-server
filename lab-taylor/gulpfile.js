@@ -2,6 +2,7 @@
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
+const nodemon = require('gulp-nodemon');
 
 gulp.task('runLint', () => {
   return gulp.src(['**/*.js','!node_modules/**'])
@@ -11,7 +12,14 @@ gulp.task('runLint', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch(['**/*.js', '!node_modules/**'], ['runTests', 'runLint']);
+  gulp.watch(['**/*.js', '!node_modules/**'], ['runLint']);
+  nodemon({
+    script: 'server.js',
+    ext: 'html js'
+  })
+  .on('restart', () => {
+    console.log('restarting server');
+  });
 });
 
 gulp.task('default', ['runLint', 'watch'], () => {
