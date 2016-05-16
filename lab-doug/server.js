@@ -14,31 +14,35 @@ const server = http.createServer(function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.write('API Endpoints:/api/cowsay');
     res.end();
-    console.log('log pathname: ' + req.url.pathname);
   }
   if(req.url.pathname == '/cowsay') {
     if (req.method == 'GET' && req.url.query['text'] === 'saywat'){
-      console.log('cowsay pathname: ' + req.url.pathname);
-      console.log('cowsay method is GET');
-      console.log('query is: ' + req.url.query['text']);
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text : req.url.query['text']}));
       res.end();
 
-    } else {
-      console.log('bad query somewhere');
+    } else if (req.method == 'GET') {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=saywat'}));
+      res.write(cowsay.say({text: ''}));
       res.end();
     }
-
-
-// a body including the value returned from cowsay.say({text: <querystring text>})
-// if the query text=message is not set, respond with:
-// status code = 400
-// a body including the value returned from cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'})
+    if(req.url.pathname == '/cowsay') {
+      if (req.method == 'POST' && req.url.query['text'] === 'userdata'){
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text : req.url.query['text']}));
+        res.end();
 
   }
+//   POST REQUEST
+//
+// the query string should have the key value text=<message>
+// the response header should include Content-Type: text/plain
+// if the json {text: messsage} is set, respond with:
+// a status code of 200
+// a body including the value returned from cowsay.say({text: <querystring text>})
+// if the json{text: messsage}is not set, respond with:
+// status code = 400
+// a body including the value returned from cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'})
 
 });
 
