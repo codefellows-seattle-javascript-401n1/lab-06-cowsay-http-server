@@ -9,9 +9,7 @@ module.exports = function(req){
 
     req.on('end', function(){
       try {
-        // req.body = JSON.parse(req.body);
-        resolve();
-        // throw new err('whaa~?');
+        resolve();        // throw new err('whaa~?');
       }catch(err){
         reject(err);
 
