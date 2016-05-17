@@ -1,11 +1,11 @@
-'run strict';
+'use strict';
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 
 var paths = ['**/*.js', './lib/*.js'];
 
-gulp.task('eslint', function(){
+gulp.task('lint', function(){
   return gulp.src(paths)
   .pipe(eslint())
   .pipe(eslint.format())
@@ -16,4 +16,4 @@ gulp.watch('watch', ()=>{
   gulp.watch('**/*.js', !'package.json', ['eslint']);
 });
 
-gulp.task('default', ['eslint']);
+gulp.task('default', ['lint']);
