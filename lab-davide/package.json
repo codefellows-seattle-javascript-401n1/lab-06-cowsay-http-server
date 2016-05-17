@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/FazioD/lab-06-cowsay-http-server.git"
   },
-  "author": "Davide Fazio",
+  "author": "faziod@uw.edu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/FazioD/lab-06-cowsay-http-server/issues"
@@ -20,6 +20,7 @@
   "devDependencies": {
     "cowsay": "^1.1.6",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0"
+    "gulp-eslint": "^2.0.0",
+    "gulp-watch": "^4.3.5"
   }
 }

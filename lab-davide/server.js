@@ -1,4 +1,3 @@
-
 'use strict';
 
 const http = require('http');
@@ -12,8 +11,6 @@ const port = process.argv[2] || 3000;
 const server = http.createServer(function(req, res){
   req.url =  parseUrl(req.url);
   req.url.query = parseQuery(req.url.query);
-
-
 
   console.log(req.url.query);
   console.log(req.url.path);
@@ -29,10 +26,17 @@ const server = http.createServer(function(req, res){
   }
 
   if(req.url.pathname === '/cowsay' && req.method === 'POST') {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write(message);
-    res.end();
-    return;
+    var body = [];
+    req.on('data', function(chunk){
+      body.push(chunk);
+    }).on('end', function(){
+      body = body.toString();
+      var message = cowsay.say({text:JSON.parse(body).text});
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write(message);
+      res.end();
+      return;
+    });
 
   } else {
     var error = cowsay.say({text: ' bad request\ntry: localhost:3000' + req.url.href});
