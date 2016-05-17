@@ -2,9 +2,8 @@
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const mocha = require('gulp-mocha');
 
-const paths = ['*.js', './lib/*.js', './test/*.js'];
+const paths = ['*.js', './lib/*.js'];
 
 gulp.task('eslint', function() {
   return gulp.src(paths)
@@ -53,13 +52,8 @@ gulp.task('eslint', function() {
     .pipe(eslint.format());
 });
 
-gulp.task('test', function() {
-  return gulp.src(paths)
-  .pipe(mocha());
-});
-
 gulp.task('watch', function() {
-  gulp.watch(['./lib/**', './test/**'], ['test', 'eslint']);
+  gulp.watch(['./lib/**'], ['eslint']);
 });
 
-gulp.task('default', ['eslint', 'test', 'watch']);
+gulp.task('default', ['eslint', 'watch']);

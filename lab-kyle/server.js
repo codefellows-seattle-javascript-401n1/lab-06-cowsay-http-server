@@ -3,7 +3,7 @@
 const http = require('http');
 const parseUrl = require('url').parse;
 const parseQuery = require('querystring').parse;
-const parsebody = require('./lib/parseJson');
+const parseBody = require('./lib/parseJson');
 const cowsay = require('cowsay');
 
 const port = process.argv[2] || 3000;
@@ -28,16 +28,16 @@ const server = http.createServer(function(req, res) {
     res.end();
   }
   //posts
-  if (req.method === 'POST' && req.url.pathname === '/cowsay') {
-    parsebody(req).then( function() {
-      var words = cowsay.say({text: req.url.query.text});
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.write(words);
+  if(/(POST|PUT|DELETE)/.test(req.method)) {
+    parseBody(req).then(function() {
+      console.log('did i make it?');
+      console.log('req.body: ', req.body);
+      res.writeHead(200);
+      res.write(cowsay.say(req.body));
       res.end();
-    }).catch(function(err){
-      err = cowsay.say({text: '400 BAD REQUEST'});
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.write(err);
+    }).catch(function(err) {
+      res.writeHead(400);
+      res.write(cowsay.say(err));
       res.end();
     });
   }
