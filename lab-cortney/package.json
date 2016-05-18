@@ -1,0 +1,19 @@
+{
+  "name": "lab-06",
+  "version": "1.0.0",
+  "description": "lab-06 cowsay http server",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
+  },
+  "dependencies": {
+    "cowsay": "^1.1.6"
+  }
+}
