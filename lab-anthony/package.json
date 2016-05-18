@@ -1,0 +1,18 @@
+{
+  "name": "lab-anthony",
+  "version": "0.1.0",
+  "description": "Lab 06 Cowsay HTTP Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ascasson",
+  "license": "MIT",
+  "dependencies": {
+    "cowsay": "^1.1.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
+  }
+}
