@@ -5,7 +5,7 @@ const eslint = require('gulp-eslint');
 
 var paths = ['**/*.js', './lib/*.js'];
 
-gulp.task('lint', function(){
+gulp.task('eslint', function(){
   return gulp.src(paths)
   .pipe(eslint())
   .pipe(eslint.format())
@@ -16,4 +16,4 @@ gulp.watch('watch', ()=>{
   gulp.watch('**/*.js', !'package.json', ['eslint']);
 });
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['eslint']);

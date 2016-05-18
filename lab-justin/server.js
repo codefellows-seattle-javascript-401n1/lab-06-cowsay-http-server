@@ -15,7 +15,7 @@ const server = http.createServer(function(req, res){
   console.log('req.method', req.method);
 
   if (req.url.pathname === '/'){
-    res.writeHead(200,{'Content-Type': 'text/plain'});
+    res.writeHead(200, {'Content-Type': 'text/plain'});
     res.write('API Endpoints: \n /api/cowsay');
     return res.end();
   }
@@ -34,10 +34,9 @@ const server = http.createServer(function(req, res){
     .catch(function(err){
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text:'bad request\ntry: localhost:3000/cowsay?text=howdy'}));
-      console.error('AMISS!', err);
-
+      console.error('ERROR!', err);
+      return res.end();
     });
-
   }
 
   if(req.method ==='POST' && req.url.pathname ==='/api/cowsay'){
@@ -54,13 +53,12 @@ const server = http.createServer(function(req, res){
     .catch(function(err){
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text:'bad request\ntry: localhost:3000/cowsay?text=howdy'}));
-      console.error('AMISS!', err);
-
+      console.error('ERROR!', err);
+      return res.end();
     });
-
   }
-
 });
+
 server.listen(port, function(){
   console.log('Server run~nning on port', port);
 });
