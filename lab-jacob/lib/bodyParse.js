@@ -6,12 +6,12 @@ module.exports = function(req) {
     req.on('data', function(data){
       req.body += data.toString();
     });
-
     req.on('end', function(){
       try{
         req.body = JSON.parse(req.body);
         resolve();
       } catch (err) {
+        console.log('heres an error');
         reject(err);
       }
     });
