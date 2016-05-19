@@ -1,15 +1,16 @@
 const http = require('http');
 const parseUrl = require('url').parse;
 const parseQuery = require('querystring').parse;
-const parseSearch = require('url').search;
 const cowsay = require('cowsay');
+const getContent = require(__dirname + '/lib/getContent');
 
 const port = process.argv[2] || 3000;
 
 const server = http.createServer(function(req, res){
+  //convert from string to object
   req.url = parseUrl(req.url);
+  /*convert a query string to an object within the req.url object*/
   req.url.query = parseQuery(req.url.query);
-
 
   if(req.url.pathname == '/'){
     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -17,14 +18,13 @@ const server = http.createServer(function(req, res){
     res.end();
   }
   if(req.url.pathname == '/cowsay' && req.method == 'GET' ) {
-
+    //http localhost:3000/cowsay 'text==saywat'
     if (req.url.query['text'] === 'saywat'){
-      console.log('GET req header: ', req.headers);
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text : req.url.query['text']}));
       res.end();
-
     } else {
+      //http localhost:3000/cowsay 'text==say'
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=saywat'}));
       res.end();
@@ -32,36 +32,26 @@ const server = http.createServer(function(req, res){
   }
 
   if(req.url.pathname == '/cowsay' && req.method == 'POST') {
-    console.log('POST req header: ', req.headers);
-    if(req.headers['content-type'] == 'application/json'){
-      console.log('the POST json header detection worked');
+    //http POST localhost:3000/cowsay  text==test < junk.json
+    if (req.url.query['text'] === 'test' && req.headers['content-type'] == 'application/json') {
+      getContent(req).then(function(){
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        // res.write('some text');
+        res.write(JSON.stringify(req.body));
+        res.write(cowsay.say({text : 'test'}));
+        res.end();
+      }).catch(function(err){
+        res.writeHead(400, {'Content-Type': 'application/json' });
+        res.write(JSON.stringify(err));
+        res.end();
+      });
+    } else if(req.headers['content-type'] !== 'application/json') {
+      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=saywat'}));
+      res.end();
     }
   }
-    //   if (req.url.query['text'] === 'userdata'){
-    //     if(req.url.query['Content-Type'] == 'application/json {text: userdata}'){
-    //     res.writeHead(200, {'Content-Type': 'text/plain'});
-    //     res.write(cowsay.say({text : req.url.query['text']}));
-    //     res.end();
-    //   } else {
-    //       res.writeHead(400, {'Content-Type': 'text/plain'});
-    //       res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=userdata'}));
-    //       res.end();
-    //     }
-    //   }
-    // }
 });
-//   POST REQUEST
-//
-// the query string should have the key value text=<message>
-// the response header should include Content-Type: text/plain
-// if the json {text: messsage} is set, respond with:
-// a status code of 200
-// a body including the value returned from cowsay.say({text: <querystring text>})
-// if the json{text: messsage}is not set, respond with:
-// status code = 400
-// a body including the value returned from cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'})
-
-
 
 server.listen(port, function(){
   console.log('server running on port: ' + port);
