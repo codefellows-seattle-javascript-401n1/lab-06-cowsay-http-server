@@ -10,6 +10,8 @@ gulp.task('eslint', () => {
    .pipe(eslint.failAfterError());
 });
 
-gulp.watch(__dirname + '**/*.js',['eslint'] );
+gulp.watch(__dirname + '**/*.js', function(event){
+  console.log('File ' + event.path + ' was ' + event.type);
+});
 
-gulp.task('default', ['eslint', 'someting else'], () => {});
+gulp.task('default', ['eslint', 'watch'], () => {});

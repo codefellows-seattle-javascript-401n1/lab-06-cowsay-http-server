@@ -10,7 +10,6 @@ module.exports = function(req){
       try {
         //complete req.body JSON object
         req.body = JSON.parse(req.body);
-        console.log('req body shoudl be an object: ', req.body);
         resolve();
       } catch(err){
         reject(err);
