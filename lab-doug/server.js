@@ -36,7 +36,6 @@ const server = http.createServer(function(req, res){
     if (req.url.query['text'] === 'test' && req.headers['content-type'] == 'application/json') {
       getContent(req).then(function(){
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        // res.write('some text');
         res.write(JSON.stringify(req.body));
         res.write(cowsay.say({text : 'test'}));
         res.end();
@@ -45,7 +44,7 @@ const server = http.createServer(function(req, res){
         res.write(JSON.stringify(err));
         res.end();
       });
-    } else if(req.headers['content-type'] !== 'application/json') {
+    } else {
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=saywat'}));
       res.end();
