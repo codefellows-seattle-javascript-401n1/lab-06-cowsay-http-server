@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/ronoh2001/lab-06-cowsay-http-server/issues"
   },
-  "homepage": "https://github.com/ronoh2001/lab-06-cowsay-http-server#readme"
+  "homepage": "https://github.com/ronoh2001/lab-06-cowsay-http-server#readme",
+  "dependencies": {
+    "cowsay": "^1.1.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
+  }
 }
