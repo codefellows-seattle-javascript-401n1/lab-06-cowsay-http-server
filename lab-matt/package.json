@@ -4,7 +4,7 @@
   "description": "Cowsay HTTP requests",
   "main": "cowsay.js",
   "scripts": {
-    "test": "mocha"
+    "test": "lint"
   },
   "repository": {
     "type": "git",
