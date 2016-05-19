@@ -1,0 +1,14 @@
+{
+  "name": "lab-andrew",
+  "version": "0.1.0",
+  "description": "cowsay server req/res",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp-eslint"
+  },
+  "author": "andrewpeterwatson@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-eslint": "^2.0.0"
+  }
+}
