@@ -16,9 +16,3 @@ module.exports = function(req){
     });
   });
 };
-//
-// module.exports = function(res){
-//   return new Promise(function(resolve, reject){
-//     res.body.key = string
-//   })
-// }
