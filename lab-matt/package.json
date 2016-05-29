@@ -2,7 +2,7 @@
   "name": "lab-matt",
   "version": "0.0.1",
   "description": "Cowsay HTTP requests",
-  "main": "cowsay.js",
+  "main": "server.js",
   "scripts": {
     "test": "lint"
   },
@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/muddybeard210/lab-06-cowsay-http-server#readme",
   "devDependencies": {
-    "cowsay": "^1.1.6",
-    "gulp-eslint": "^2.0.0"
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "cowsay": "^1.1.6"
   }
 }
