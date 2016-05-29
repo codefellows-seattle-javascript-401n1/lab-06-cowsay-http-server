@@ -17,12 +17,3 @@ module.exports = function(req) {
     });
   });
 };
-
-/*
-var body = [];
-request.on('data', function(chunk) {
-  body.push(chunk);
-}).on('end', function() {
-  body = Buffer.concat(body).toString();
-  // at this point, `body` has the entire request body stored in it as a string
-});*/

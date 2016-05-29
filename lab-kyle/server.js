@@ -16,31 +16,37 @@ const server = http.createServer(function(req, res) {
   console.log('req.body', req.body);
   //gets
   if (req.method === 'GET' && req.url.pathname === '/'){
-    var slash = cowsay.say({text: 'API Endpoints:/cowsay'});
+    var slash = cowsay.say({f: 'dragon' , text: 'API Endpoints:/cowsay'});
     res.writeHead(200, {'Content-type': 'text/plain'});
     res.write(slash);
     res.end();
-  }
-  if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-    var words = cowsay.say({text: req.url.query.text});
+  } else if (req.method === 'GET' && req.url.pathname === '/api/cowsay' && req.url.query.text) {
+    var words = cowsay.say({f:'dragon', text: req.url.query.text});
     res.writeHead(200, {'Content-type': 'text/plain'});
     res.write(words);
     res.end();
-  }
-  //posts
-  if(/(POST|PUT|DELETE)/.test(req.method)) {
+  } else if(/(POST|PUT|DELETE)/.test(req.method) && req.url.pathname === '/api/cowsay') {
     parseBody(req).then(function() {
       console.log('did i make it?');
       console.log('req.body: ', req.body);
       res.writeHead(200);
-      res.write(cowsay.say(req.body));
+      res.write(cowsay.say({text: req.body.text}));
       res.end();
     }).catch(function(err) {
       res.writeHead(400);
-      res.write(cowsay.say(err));
+      console.error(err);
+      res.write(cowsay.say({text: 'bad request yo'}));
       res.end();
     });
+  } else {
+    var badRequest = cowsay.say({f:'dragon', text: 'bad request'});
+    res.writeHead(400, {'Content-type': 'text/plain'});
+    res.write(badRequest);
+    res.end();
   }
+
+
+
 
 });
 
