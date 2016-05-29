@@ -12,16 +12,16 @@ const port = process.argv[2] || 5000;
 const server = http.createServer(function(req, res){
   req.url = parseUrl(req.url);
   req.url.query = parseQuery(req.url.query);
+  if(req.url.pathname === '/'){
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('API Endpoints:\n ' + '/cowsay\n');
+    res.end();
+    return;
+  }
 
   if(req.method === 'POST' || 'PUT' || 'DELETE'){
     parseBody(req).then(function(){
-      if(req.url.pathname === '/'){
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write('API Endpoints:\n ' + '/cowsay\n');
-        res.end();
-        return;
-      }
-      if(req.url.pathname === '/cowsay'){
+      if(req.url.pathname === '/api/cowsay'){
         res.write(cowsay.say({text: JSON.stringify(req.body.user) || 'Sup Blood'}));
         res.end();
       } else {
@@ -36,14 +36,7 @@ const server = http.createServer(function(req, res){
 
   }
   if (req.method === 'GET'){
-    if(req.url.pathname === '/'){
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write('API Endpoints:\n ' + '/cowsay\n');
-      res.end();
-      return;
-
-    }
-    if(req.url.pathname === '/cowsay'){
+    if(req.url.pathname === '/api/cowsay'){
       res.write(cowsay.say({text: JSON.stringify(req.url.query.text) || 'Sup Blood'}));
       res.end();
 
