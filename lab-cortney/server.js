@@ -14,6 +14,7 @@ const server = http.createServer(function(req, res){
   req.url = parseUrl(req.url);
   req.url.query = parseQuery(req.url.query);
 
+// handling requests to localhost:3000 without any endpoint
   if (req.url.pathname === '/' && !/(PUT|POST|DELETE)/.test(req.method)) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.write(cowsay.say({f: 'moofasa', text: 'Welcome, and moorawr! Let\'s type a query! Like this:'+
@@ -22,6 +23,7 @@ const server = http.createServer(function(req, res){
     return;
   }
 
+// handling a query with an endpoint and...text!
   if (req.url.pathname === '/cowsay?text=', req.url.query.text) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.write(cowsay.say({text: req.url.query.text}));
@@ -29,7 +31,8 @@ const server = http.createServer(function(req, res){
     return;
   }
 
-  if(/(PUT|POST|DELETE)/.test(req.method)) {
+// handling POST, PUT, DELETE requests
+  if(req.url.pathname === '/' && /(PUT|POST|DELETE)/.test(req.method)) {
     parseBody(req).then(function(){
       var newText = req.url.query.text;
       console.log(newText);
@@ -40,7 +43,7 @@ const server = http.createServer(function(req, res){
       return;
     });
   }
-
+// if the POST, PUT or DELETE request isn't done correctly
   else {
     res.writeHead(400, {'Content-Type': 'text/plain'});
     res.write(cowsay.say({f: 'turtle', text: 'Hey you! Try typing a query! Like this:'+
