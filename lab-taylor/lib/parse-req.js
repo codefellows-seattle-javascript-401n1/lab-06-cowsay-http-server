@@ -27,7 +27,6 @@ exports.handleGet = function (req) {
       resolve();
     } else {
       reject(new Error('no text query found'));
-      reject();
     }
   });
 };
