@@ -26,7 +26,7 @@ function defaultRes(res){
   res.writeHead(200, {
     'Content-Type': 'text/plain'
   });
-  res.write('API ENDPOINTS:\n/cowsay');
+  res.write('API ENDPOINTS:\n/api/cowsay');
   res.end();
 }
 
@@ -39,7 +39,7 @@ const server = http.createServer(function (req,res) {
     return;
   }
 
-  if (req.url.pathname === '/cowsay') {
+  if (req.url.pathname === 'api/cowsay') {
     if (req.method === 'POST') {
       bodyParser.handlePost(req).then(function () {
         buildCowRes(req.body, 200, res);
@@ -56,7 +56,7 @@ const server = http.createServer(function (req,res) {
       });
     }
   } else {
-    buildCowRes(badReq, 400, res);
+    buildCowRes(badReq, 404, res);
   }
 
 });
