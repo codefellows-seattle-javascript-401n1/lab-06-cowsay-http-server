@@ -8,7 +8,7 @@ module.exports = function(req){
     });
     req.on('end',function(){
       try {
-        req.body= JSON.parse(req.body);
+        req.body = JSON.parse(req.body);
         resolve();
       } catch(err){
         reject(err);
