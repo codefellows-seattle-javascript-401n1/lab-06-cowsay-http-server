@@ -34,7 +34,8 @@ const server = http.createServer(function(req, res){
   if(req.url.pathname == '/cowsay' && req.method == 'POST') {
     //http POST localhost:3000/cowsay  text==test < junk.json
     if (req.url.query['text'] === 'test' && req.headers['content-type'] == 'application/json') {
-      getContent(req).then(function(){
+      getContent(req)
+      .then(function(){
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(JSON.stringify(req.body));
         res.write(cowsay.say({text : 'test'}));
