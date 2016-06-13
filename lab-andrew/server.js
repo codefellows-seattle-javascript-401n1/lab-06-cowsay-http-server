@@ -26,7 +26,7 @@ const server = http.createServer(function(req, res) {
     console.log(`Should be POST: ${req.method}`);
     parseBody(req).then(function() {
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say({text:'"sup Trolls"'}));
+      res.write(cowsay.say(req.body));
       res.end();
     }).catch(function() {
       res.writeHead(400, {'Content-Type': 'text/plain'});
