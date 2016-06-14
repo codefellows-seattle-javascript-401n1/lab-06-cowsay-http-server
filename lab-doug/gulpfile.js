@@ -20,9 +20,11 @@ gulp.task('nodemon', function(){
   });
 });
 
-
-gulp.watch(__dirname + '**/*.js', function(event){
-  console.log('File ' + event.path + ' was ' + event.type);
+gulp.task('watch', function() {
+  gulp.watch(__dirname + '**/*.js', function(event){
+    console.log('File ' + event.path + ' was ' + event.type);
+  });
 });
+
 
 gulp.task('default', ['eslint'], () => {});
