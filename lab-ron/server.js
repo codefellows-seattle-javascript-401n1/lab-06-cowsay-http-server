@@ -4,7 +4,7 @@ const http = require('http');
 const cowsay = require('cowsay');
 const parseUrl = require('url').parse;
 const parseQuery = require('querystring').parse;
-// const parseBody = require('./lib/parse-json');
+const parseBody = require('./lib/parse-json');
 const port = process.argv[2]||3000;
 
 var server = http.createServer(function(req,res){
@@ -15,19 +15,28 @@ var server = http.createServer(function(req,res){
   if(pathname == '/'){
     res.writeHead(200,{'Content-Type' : 'text/plain'});
     res.write(cowsay.say({f: 'dragon', text:'Welcome to our Dragon world'}));
-  }
-
-  else if(pathname == '/cowsay') {
+    res.end();
+    return;
+  } else if(pathname == '/cowsay') {
     if(req.method == 'GET'){
+      try{
+        parseBody(req);
+        res.writeHead(200,{'Content-Type' : 'text/plain'});
+        res.write(cowsay.say({f:'dragon-and-cow', text:query.text}));
+      } catch(error){
+        res.writeHead(400, {'Content-Type':'text/plain'});
+        res.writeHead(cowsay.say({text: 'bad request|ntry: localhost:3000/cowsay?text=howdy'}));
+      }
+    } else if(req.method == 'POST'){
       res.writeHead(200,{'Content-Type' : 'text/plain'});
-      res.write(cowsay.say({f:'dragon-and-cow', text:query.text}));
+      res.write(cowsay.say({f:'stegosaurus', text:query.text}));
     }
-   else if(req.method == 'POST'){
-     res.writeHead(200,{'Content-Type' : 'text/plain'});
-     res.write(cowsay.say({f:'stegosaurus', text:query.text}));
-   }
+    res.end();
+    return;
+  } else {
+    res.writeHead(400, {'Content-Type':'text/plain'});
+    res.writeHead(cowsay.say({text: 'bad request|ntry: localhost:3000/cowsay?text=howdy'}));
   }
-  res.end();
 });
 
 server.listen(port, function() {
